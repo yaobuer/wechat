@@ -2,7 +2,7 @@
 =================
 #配置
 config.php中放入配置信息：
-'workerman' => [
+'wechat' => [
 		'app_id' => '',  //app id
 		'app_secret' => '', //app secret
 		'mch_id' => '', //商户号
