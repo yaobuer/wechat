@@ -46,6 +46,16 @@ class Wechat{
 	}
 	
 	/**
+	 * 显示错误信息
+	* @date: 2016-12-28 下午12:31:08
+	* @author: sunnnnn
+	* @param unknown $msg
+	 */
+	public function error($msg){
+		Error::showError($msg);
+	}
+	
+	/**
 	 * 设置配置数据
 	* @date: 2016-12-28 上午9:58:47
 	* @author: sunnnnn
