@@ -19,7 +19,7 @@ class Error{
 			<div class="container">
 				<div class="row" style="margin-top:50px;">
 					<div class="col-md-12">
-						<div class="alert alert-danger-inverse with-icon">
+						<div class="alert alert-warning-inverse with-icon">
 						  	<i class="icon-remove-sign"></i>
 						  	<div class="content">
 						  		<h4>出错啦</h4>
