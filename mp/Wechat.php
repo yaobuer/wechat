@@ -1,14 +1,15 @@
 <?php
-/**
- * 微信公众平台接口开发
-* @date: 2016-12-28 上午9:51:081
-* @author: sunnnnn
- */
 namespace sunnnnn\wechat\mp;
 use sunnnnn\wechat\Error;
+/**
+* @use: 微信公众平台接口开发
+* @date: 2017-5-11 上午10:34:26
+* @author: sunnnnn [www.sunnnnn.com] [mrsunnnnn@qq.com]
+ */
 class Wechat{
-	private $frame = ['tp5'];
-	private $cfg;
+	
+	public $config;
+	
 	const STATE = 'wechat';
 	const WX_URL_CODE = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect';
 	const WX_URL_OPENID = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code';
@@ -22,24 +23,19 @@ class Wechat{
 	
 	const PAY_URL_BONUS = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack'; //红包接口
 
-	public function __construct($frame = '', $config = []){
-		$frame = empty($frame) ? 'tp5' : trim($frame);
-		if(!in_array($frame, $this->frame)){
-			Error::showError('this frame is not support !');
-		}
+	public function __construct($config = []){
 		if(empty($config)){
-			switch($frame){
-				case 'tp5':
-					$this->cfg = config('wechat');
-					break;
-				default:$this->cfg = '';
+			if(function_exists('config')){
+				$this->config = config('wechat');
 			}
 		}else{
-			$this->cfg = $config;
+			$this->config = $config;
 		}
-		if(empty($this->cfg)){
+		
+		if(empty($this->config)){
 			Error::showError('Please set the configuration file <param: wechat>!');
 		}
+		
 		if(!$this->isWeChatBrowser()){
 			Error::showError('please open this in wechat app !');
 		}
