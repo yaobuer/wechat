@@ -1,7 +1,7 @@
 <?php
 /**
  * 微信公众平台接口开发
-* @date: 2016-12-28 上午9:51:08
+* @date: 2016-12-28 上午9:51:081
 * @author: sunnnnn
  */
 namespace sunnnnn\wechat\mp;
