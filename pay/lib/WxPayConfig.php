@@ -57,15 +57,4 @@ class WxPayConfig
 	 * @var int
 	 */
 	const REPORT_LEVENL = 1;
-	
-	
-	public static function setConfig($config){
-		foreach($config as $key => $val){
-			if(!empty($val)){
-				switch($key){
-					case 'appId': const APPID = $val;
-				}
-			}
-		}
-	}
 }
