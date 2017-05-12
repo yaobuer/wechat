@@ -58,7 +58,7 @@ class Wechat{
 	* @param array $cfg
 	 */
 	public function setCfg($cfg = []){
-		$this->cfg = empty($cfg) || !is_array($cfg) ? [] : $cfg;
+		$this->config = empty($cfg) || !is_array($cfg) ? [] : $cfg;
 	}
 	
 	/**
@@ -68,7 +68,7 @@ class Wechat{
 	* @return Ambigous <string, unknown, multitype:, array>
 	 */
 	public function getCfg(){
-		return $this->cfg;
+		return $this->config;
 	}
 	
 	/**
@@ -94,7 +94,7 @@ class Wechat{
 	 */
 	public function getCodeUrl($url, $userinfo = false){
 		$scope = $userinfo ? 'snsapi_userinfo' : 'snsapi_base';
-		return sprintf(self::WX_URL_CODE, $this->cfg['app_id'], urlencode($url), $scope, self::STATE);
+		return sprintf(self::WX_URL_CODE, $this->config['app_id'], urlencode($url), $scope, self::STATE);
 	}
 	
 	/**
@@ -106,7 +106,7 @@ class Wechat{
 	* @return mixed
 	 */
 	public function getOpenid($code, $getAll = false){
-		$url = sprintf(self::WX_URL_OPENID, $this->cfg['app_id'], $this->cfg['app_secret'], $code);
+		$url = sprintf(self::WX_URL_OPENID, $this->config['app_id'], $this->config['app_secret'], $code);
 		$resultJson = file_get_contents($url);
 		$result = json_decode($resultJson, true);
 		if($getAll){
@@ -138,7 +138,7 @@ class Wechat{
 	* @return Ambigous <unknown, mixed>
 	 */
 	public function getAccessToken($getAll = false){
-		$url = sprintf(self::WX_URL_ACCESSTOKEN, $this->cfg['app_id'], $this->cfg['app_secret']);
+		$url = sprintf(self::WX_URL_ACCESSTOKEN, $this->config['app_id'], $this->config['app_secret']);
 		$result = $this->curlGet($url);
 		return $getAll ? $result : $result['access_token'];
 	}
@@ -173,7 +173,7 @@ class Wechat{
 		$data['timestamp'] = strval(time());
 		$data['url'] = empty($url) ? 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] : $url;
 		$data['sign'] = $this->getSign($data);
-		$data['appid'] = $this->cfg['app_id'];
+		$data['appid'] = $this->config['app_id'];
 		return $data;
 	}
 	
@@ -360,7 +360,7 @@ class Wechat{
 	* @param unknown $path
 	 */
 	public function setCertPath($path){
-		$this->cfg['cert_path'] = $path;
+		$this->config['cert_path'] = $path;
 	}
 	
 	/**
@@ -378,9 +378,9 @@ class Wechat{
 	 */
 	public function sendBonus($openid, $money, $number, $send_name = '', $wishing = '', $act_name = '', $remark = ''){
 		$data['nonce_str'] = strval(time());
-		$data['mch_billno'] = $this->cfg['mch_id'].date('YmdHis').rand(1000, 9999);
-		$data['mch_id'] = $this->cfg['mch_id'];
-		$data['wxappid'] = $this->cfg['app_id'];
+		$data['mch_billno'] = $this->config['mch_id'].date('YmdHis').rand(1000, 9999);
+		$data['mch_id'] = $this->config['mch_id'];
+		$data['wxappid'] = $this->config['app_id'];
 		$data['send_name'] = $send_name;
 		$data['re_openid'] = $openid;
 		$data['total_amount'] = $money;
@@ -443,7 +443,7 @@ class Wechat{
 				}
 			}
 		}
-		$str .= '&key='.$this->cfg['mch_key'];
+		$str .= '&key='.$this->config['mch_key'];
 		$sign = strtoupper(md5($str));
 		return $sign;
 	}
@@ -475,10 +475,10 @@ class Wechat{
 		//第一种方法，cert 与 key 分别属于两个.pem文件
 		//默认格式为PEM，可以注释
 // 		curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-		curl_setopt($ch,CURLOPT_SSLCERT, $this->cfg['cert_path'].'/apiclient_cert.pem');
+		curl_setopt($ch,CURLOPT_SSLCERT, $this->config['cert_path'].'/apiclient_cert.pem');
 		//默认格式为PEM，可以注释
 // 		curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-		curl_setopt($ch,CURLOPT_SSLKEY, $this->cfg['cert_path'].'/apiclient_key.pem');
+		curl_setopt($ch,CURLOPT_SSLKEY, $this->config['cert_path'].'/apiclient_key.pem');
 	
 		//第二种方式，两个文件合成一个.pem文件
 		// 	curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/all.pem');

@@ -1,16 +1,6 @@
 <?php
 namespace sunnnnn\wechat\pay\lib;
-/**
- * 
- * JSAPI支付实现类
- * 该类实现了从微信公众平台获取code、通过code获取openid和access_token、
- * 生成jsapi支付js接口所需的参数、生成获取共享收货地址所需的参数
- * 
- * 该类是微信支付提供的样例程序，商户可根据自己的需求修改，或者使用lib中的api自行开发
- * 
- * @author widy
- *
- */
+
 class JsApiPay
 {
 	/**
@@ -29,7 +19,7 @@ class JsApiPay
 	 * @var array
 	 */
 	public $data = null;
-	
+	public $curl_timeout = 30;
 	/**
 	 * 
 	 * 通过跳转获取用户的openid，跳转流程如下：
@@ -43,7 +33,7 @@ class JsApiPay
 		//通过code获得openid
 		if (!isset($_GET['code'])){
 			//触发微信返回code码
-			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].$_SERVER['QUERY_STRING']);
+			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
 			Header("Location: $url");
 			exit();
@@ -148,7 +138,7 @@ class JsApiPay
 	{	
 		$getData = $this->data;
 		$data = array();
-		$data["appid"] = WxPayConfig::APPID;
+		$data["appid"] = WxPayConfig::$app_id;
 		$data["url"] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		$time = time();
 		$data["timestamp"] = "$time";
@@ -162,7 +152,7 @@ class JsApiPay
 			"addrSign" => $addrSign,
 			"signType" => "sha1",
 			"scope" => "jsapi_address",
-			"appId" => WxPayConfig::APPID,
+			"appId" => WxPayConfig::$app_id,
 			"timeStamp" => $data["timestamp"],
 			"nonceStr" => $data["noncestr"]
 		);
@@ -179,7 +169,7 @@ class JsApiPay
 	 */
 	private function __CreateOauthUrlForCode($redirectUrl)
 	{
-		$urlObj["appid"] = WxPayConfig::APPID;
+		$urlObj["appid"] = WxPayConfig::$app_id;
 		$urlObj["redirect_uri"] = "$redirectUrl";
 		$urlObj["response_type"] = "code";
 		$urlObj["scope"] = "snsapi_base";
@@ -197,8 +187,8 @@ class JsApiPay
 	 */
 	private function __CreateOauthUrlForOpenid($code)
 	{
-		$urlObj["appid"] = WxPayConfig::APPID;
-		$urlObj["secret"] = WxPayConfig::APPSECRET;
+		$urlObj["appid"] = WxPayConfig::$app_id;
+		$urlObj["secret"] = WxPayConfig::$app_secret;
 		$urlObj["code"] = $code;
 		$urlObj["grant_type"] = "authorization_code";
 		$bizString = $this->ToUrlParams($urlObj);

@@ -23,10 +23,10 @@ class WxPayConfig
 	 * 获取地址：https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&token=2005451881&lang=zh_CN
 	 * @var string
 	 */
-	const APPID = '';
-	const APPSECRET = '';
-	const MCHID = '';
-	const KEY = '';
+	public static $app_id = 'wx5b53a919cfebd28c'; //APPID
+	public static $app_secret = 'd7fc05f18bf01b237189c5da7ca57b89'; //APPSECRET
+	public static $mch_id = '1403826102'; //MCHID
+	public static $mch_key = 'wfaf654g68x1cgh4k4f1jty65k41sd35'; //KEY
 	
 	//=======【证书路径设置】=====================================
 	/**
@@ -35,8 +35,8 @@ class WxPayConfig
 	 * API证书下载地址：https://pay.weixin.qq.com/index.php/account/api_cert，下载之前需要安装商户操作证书）
 	 * @var path
 	 */
-	const SSLCERT_PATH = '';//../cert/apiclient_cert.pem
-	const SSLKEY_PATH = '';//../cert/apiclient_key.pem
+	public static $cert_path = '';//../cert/apiclient_cert.pem   SSLCERT_PATH
+	public static $key_path = '';//../cert/apiclient_key.pem     SSLKEY_PATH
 	
 	//=======【curl代理设置】===================================
 	/**
@@ -57,4 +57,24 @@ class WxPayConfig
 	 * @var int
 	 */
 	const REPORT_LEVENL = 1;
+	
+	const NOTIFY_URL = '';
+	
+	public static function setConfig($config){
+		if(!empty($config) && is_array($config)){
+			foreach($config as $key => $val){
+				if(!empty($val)){
+					switch($key){
+						case 'app_id': self::$app_id = $val; break;
+						case 'app_secret': self::$app_secret = $val; break;
+						case 'mch_id': self::$mch_id = $val; break;
+						case 'mch_key': self::$mch_key = $val; break;
+						case 'cert_path': self::$cert_path = $val; break;
+						case 'key_path': self::$key_path = $val; break;
+						default: break;
+					}
+				}
+			}
+		}
+	}
 }
