@@ -1,5 +1,7 @@
 <?php
 namespace sunnnnn\wechat\mp;
+
+use Yii;
 use sunnnnn\wechat\Error;
 /**
 * @use: 微信公众平台接口开发
@@ -27,6 +29,9 @@ class Wechat{
 		if(empty($config)){
 			if(function_exists('config')){
 				$this->config = config('wechat');
+			}
+			if(!empty(Yii::$app->wechat->config)){
+				$this->config = Yii::$app->wxpay->config;
 			}
 		}else{
 			$this->config = $config;

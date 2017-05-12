@@ -1,6 +1,7 @@
 <?php
 namespace sunnnnn\wechat\pay;
 
+use Yii;
 use sunnnnn\wechat\Error;
 use sunnnnn\wechat\pay\lib\WxPayConfig;
 use sunnnnn\wechat\pay\lib\WxPayApi;
@@ -33,6 +34,9 @@ class WxPay{
 		if(empty($config)){
 			if(function_exists('config')){
 				$this->config = config('wechat');
+			}
+			if(!empty(Yii::$app->wxpay->config)){
+				$this->config = Yii::$app->wxpay->config;
 			}
 		}else{
 			$this->config = $config;
