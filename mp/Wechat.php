@@ -26,11 +26,7 @@ class Wechat extends Component{
 	const PAY_URL_BONUS = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack'; //红包接口
 
 	public function __construct($config = []){
-		if(empty($config)){
-			if(function_exists('config')){
-				$this->config = config('wechat');
-			}
-		}else{
+		if(!empty($config)){
 			$this->config = $config;
 		}
 		
