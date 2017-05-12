@@ -1,14 +1,14 @@
 <?php
 namespace sunnnnn\wechat\mp;
 
-use Yii;
+use yii\base\Component;
 use sunnnnn\wechat\Error;
 /**
 * @use: 微信公众平台接口开发
 * @date: 2017-5-11 上午10:34:26
 * @author: sunnnnn [www.sunnnnn.com] [mrsunnnnn@qq.com]
  */
-class Wechat{
+class Wechat extends Component{
 	
 	public $config;
 	
@@ -30,9 +30,6 @@ class Wechat{
 			if(function_exists('config')){
 				$this->config = config('wechat');
 			}
-			if(!empty(Yii::$app->wechat->config)){
-				$this->config = Yii::$app->wxpay->config;
-			}
 		}else{
 			$this->config = $config;
 		}
@@ -44,6 +41,10 @@ class Wechat{
 		if(!$this->isWeChatBrowser()){
 			Error::showError('please open this in wechat app !');
 		}
+	}
+	
+	public function setConfig($config){
+		$this->config = $config;
 	}
 	
 	/**
