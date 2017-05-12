@@ -1,7 +1,6 @@
 <?php
 namespace sunnnnn\wechat\pay;
 
-use yii\base\Component;
 use sunnnnn\wechat\Error;
 use sunnnnn\wechat\pay\lib\WxPayConfig;
 use sunnnnn\wechat\pay\lib\WxPayApi;
@@ -10,7 +9,7 @@ use sunnnnn\wechat\pay\lib\WxPayUnifiedOrder;
 use sunnnnn\wechat\pay\lib\WxPayBizPayUrl;
 use sunnnnn\wechat\pay\lib\WxPayNotifyReply;
 
-class WxPay extends Component{
+class WxPay{
 	
 	public $config;
 	
@@ -44,6 +43,13 @@ class WxPay extends Component{
 		}
 		
 		WxPayConfig::setConfig($this->config);
+	}
+	
+	public function __set($name, $value){
+		$setter = 'set' . $name;
+		if (method_exists($this, $setter)) {
+			$this->$setter($value);
+		}
 	}
 	
 	public function setConfig($config){
