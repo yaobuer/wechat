@@ -50,26 +50,6 @@ class Wechat extends Component{
 	}
 	
 	/**
-	 * 设置配置数据
-	* @date: 2016-12-28 上午9:58:47
-	* @author: sunnnnn
-	* @param array $cfg
-	 */
-	public function setCfg($cfg = []){
-		$this->config = empty($cfg) || !is_array($cfg) ? [] : $cfg;
-	}
-	
-	/**
-	 * 获取配置数据
-	* @date: 2016-12-28 上午9:59:01
-	* @author: sunnnnn
-	* @return Ambigous <string, unknown, multitype:, array>
-	 */
-	public function getCfg(){
-		return $this->config;
-	}
-	
-	/**
 	 * 判断是否微信浏览器
 	* @date: 2016-12-28 上午9:59:17
 	* @author: sunnnnn
