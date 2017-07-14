@@ -27,7 +27,7 @@ class Wechat extends Component{
 
 	public function __construct($config = []){
 		if(!empty($config)){
-			$this->config = $config;
+		    $this->config = isset($config['config']) ? $config['config'] : $config;
 		}
 		
 		if(empty($this->config)){
@@ -37,10 +37,6 @@ class Wechat extends Component{
 		if(!$this->isWeChatBrowser()){
 			Error::showError('please open this in wechat app !');
 		}
-	}
-	
-	public function setConfig($config){
-		$this->config = $config;
 	}
 	
 	/**

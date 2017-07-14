@@ -32,7 +32,7 @@ class WxPay extends Component{
 	 */
 	public function __construct($config = []){
 		if(!empty($config)){
-			$this->config = $config;
+		    $this->config = isset($config['config']) ? $config['config'] : $config;
 		}
 	
 		if(empty($this->config)){
@@ -42,10 +42,6 @@ class WxPay extends Component{
 		WxPayConfig::setConfig($this->config);
 	}
 	
-	public function setConfig($config){
-		$this->config = $config;
-	}
-
 	/**
 	 * 扫码支付：模式一（需要公众平台填写回调地址）
 	 * 流程：
